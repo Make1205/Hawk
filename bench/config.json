@@ -16,9 +16,7 @@
           "flags": [
             "-DLOGN=9",
             "-DHAWK_AVX2=0",
-            "-DNTRUGEN_AVX2=0",
-            "-fno-tree-vectorize",
-            "-fno-tree-slp-vectorize"
+            "-DNTRUGEN_AVX2=0"
           ],
           "sources": [
             "hawk_kgen.c",
@@ -91,9 +89,7 @@
           "flags": [
             "-DLOGN=10",
             "-DHAWK_AVX2=0",
-            "-DNTRUGEN_AVX2=0",
-            "-fno-tree-vectorize",
-            "-fno-tree-slp-vectorize"
+            "-DNTRUGEN_AVX2=0"
           ],
           "sources": [
             "hawk_kgen.c",

@@ -113,3 +113,13 @@ header/runtime/libm probe. Failure reports apt package build-essential
 (including libc6-dev). Exact extra per-build flags are printed near the
 SUMMARY heading as well as retained in metadata and logs. This final
 preflight/report change leaves the measured driver and QUICK values unchanged.
+
+
+## FP contraction policy update (2026-11-10)
+
+The shared rule in PROTOCOL.md now requires -ffp-contract=off for all actual
+floating-point builds. The local c-fn-dsa index-3461 mismatch was traced to
+compiler contraction (15 FMA -> 0; equality restored), not a source defect.
+All runs now audit benchmark-owned objects and the linked driver with objdump
+and save *-fma-audit.json. Missing objdump fails preflight: apt install binutils.
+HAWK KeyGen/Sign are integer/fixed-point, with no double arithmetic or GMP. The only proposed floating verification block in hawk_vrfy.c is commented out. Thus no contraction flag is required or added. The existing arithmetic/timing boundaries are preserved; the old bench-added -fno-tree-vectorize/-fno-tree-slp-vectorize options are removed to follow the common GCC rule. Both backends must audit to zero FMA.
