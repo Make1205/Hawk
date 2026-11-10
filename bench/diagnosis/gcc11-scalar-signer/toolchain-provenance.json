@@ -1,0 +1,14 @@
+[
+  {
+    "url": "https://archive.ubuntu.com/ubuntu/pool/main/g/gcc-11/gcc-11_11.4.0-1ubuntu1~22.04.3_amd64.deb",
+    "sha256": "5422307110e695d62a2574c8b765bf38d48b2ed520206e5b7d2b9081a68008f3"
+  },
+  {
+    "url": "https://archive.ubuntu.com/ubuntu/pool/main/g/gcc-11/cpp-11_11.4.0-1ubuntu1~22.04.3_amd64.deb",
+    "sha256": "5243177370b810cc40341801a3b8def6cdd7477ac765862f7727a868629947a3"
+  },
+  {
+    "url": "https://archive.ubuntu.com/ubuntu/pool/main/g/gcc-11/libgcc-11-dev_11.4.0-1ubuntu1~22.04.3_amd64.deb",
+    "sha256": "35ed68622daf796ac010f63c73abd8aff851fc6d862038461b053b55dbec93a6"
+  }
+]

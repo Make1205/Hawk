@@ -60,11 +60,11 @@ def main():
    flags=BASE+variant.get('flags',[])+['-I.', '-I'+str(stage/'bench')]
    log=out/(key+'-build.log');objs=[]
    for j,s in enumerate(variant['sources']):
-    obj=dest/(str(j)+'.o');call([CC]+flags+['-c',s,'-o',obj],folder,log);objs.append(obj)
+    obj=dest/(str(j)+'.o');call([CC]+flags+variant.get('source_flags',{}).get(s,[])+['-c',s,'-o',obj],folder,log);objs.append(obj)
    extra=[]
    for j,spec in enumerate(variant.get('extra_sources',[])):
     obj=dest/('extra'+str(j)+'.o');call([CC]+flags+spec.get('flags',[])+['-c',spec['path'],'-o',obj],folder,log);extra.append(obj)
-   driver=dest/'driver';call([CC]+flags+['-include',str(stage/'bench'/variant.get('adapter','adapter.h')),'-c',str(stage/'bench/driver.c'),'-o',dest/'driver.o'],folder,log)
+   driver=dest/'driver';call([CC]+flags+variant.get('driver_flags',[])+['-include',str(stage/'bench'/variant.get('adapter','adapter.h')),'-c',str(stage/'bench/driver.c'),'-o',dest/'driver.o'],folder,log)
    timers=[]
    for name in ('cpucycles','speed_print'):
     obj=dest/(name+'.o');call([CC]+BASE+['-c',str(stage/'bench'/(name+'.c')),'-o',obj],folder,log);timers.append(obj)
@@ -119,7 +119,7 @@ def main():
  for rr in CFG['sets']:
   for vv in rr['variants']:
    s+='* '+rr['name']+' '+vv['name']+': `'+ ' '.join(vv.get('flags',[]))+'`; link `'+ ' '.join(vv.get('libs',[]))+'`.\n'
- s+='\n'
+ s+='\nRef hawk_sign.c additionally uses -fno-strict-aliasing; see compiler diagnosis in NOTES.md. Other translation units retain their original flags.\n\n'
  s+='| 参数集 | n | q | pk | sig（仓库实际） | 论文 sig | ref KeyGen/Sign/Verify | AVX2 KeyGen/Sign/Verify |'
  if CFG.get('calibration'):s+=' ratio to previous ref / AVX2 |'
  s+='\n|---|---:|---:|---:|---|---:|---|---|'+('---|' if CFG.get('calibration') else '')+'\n'

@@ -14,7 +14,6 @@
           "name": "ref",
           "cwd": "src",
           "flags": [
-            "-DLOGN=9",
             "-DHAWK_AVX2=0",
             "-DNTRUGEN_AVX2=0"
           ],
@@ -40,13 +39,20 @@
               ],
               "expect": "n = 1024"
             }
+          ],
+          "source_flags": {
+            "hawk_sign.c": [
+              "-fno-strict-aliasing"
+            ]
+          },
+          "driver_flags": [
+            "-DLOGN=9"
           ]
         },
         {
           "name": "avx2",
           "cwd": "src",
           "flags": [
-            "-DLOGN=9",
             "-DHAWK_AVX2=1",
             "-DNTRUGEN_AVX2=1"
           ],
@@ -72,6 +78,9 @@
               ],
               "expect": "n = 1024"
             }
+          ],
+          "driver_flags": [
+            "-DLOGN=9"
           ]
         }
       ]
@@ -87,7 +96,6 @@
           "name": "ref",
           "cwd": "src",
           "flags": [
-            "-DLOGN=10",
             "-DHAWK_AVX2=0",
             "-DNTRUGEN_AVX2=0"
           ],
@@ -113,13 +121,20 @@
               ],
               "expect": "n = 1024"
             }
+          ],
+          "source_flags": {
+            "hawk_sign.c": [
+              "-fno-strict-aliasing"
+            ]
+          },
+          "driver_flags": [
+            "-DLOGN=10"
           ]
         },
         {
           "name": "avx2",
           "cwd": "src",
           "flags": [
-            "-DLOGN=10",
             "-DHAWK_AVX2=1",
             "-DNTRUGEN_AVX2=1"
           ],
@@ -145,6 +160,9 @@
               ],
               "expect": "n = 1024"
             }
+          ],
+          "driver_flags": [
+            "-DLOGN=10"
           ]
         }
       ]

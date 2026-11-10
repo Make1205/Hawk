@@ -123,3 +123,80 @@ compiler contraction (15 FMA -> 0; equality restored), not a source defect.
 All runs now audit benchmark-owned objects and the linked driver with objdump
 and save *-fma-audit.json. Missing objdump fails preflight: apt install binutils.
 HAWK KeyGen/Sign are integer/fixed-point, with no double arithmetic or GMP. The only proposed floating verification block in hawk_vrfy.c is commented out. Thus no contraction flag is required or added. The existing arithmetic/timing boundaries are preserved; the old bench-added -fno-tree-vectorize/-fno-tree-slp-vectorize options are removed to follow the common GCC rule. Both backends must audit to zero FMA.
+
+
+## GCC 11.4 scalar signer failure and minimal build workaround
+
+User failure: 512-ref native selftest reported `8: verify error`. The prefix
+8 is logn=8, i.e. n=256 in the native multi-degree selftest, not sample 8 or
+n=512. The user's local result directory is not in this cloud checkout.
+
+An unmodified Ubuntu GCC 11.4.0-1ubuntu1~22.04.3 toolchain was extracted into a
+user-owned cloud workspace solely for diagnosis, without sudo/system changes.
+The byte-identical pinned native sources and selftest reproduce the same error
+with -O3 -march=skylake, HAWK_AVX2=0, NTRUGEN_AVX2=0. Skylake selects the
+AVX2-class ISA of the user's i7-10700K; this is not a claim of identical hardware.
+Normal bench/run.sh still uses the system GCC, not this diagnostic toolchain.
+
+| GCC 11.4 full scalar build | Native selftest |
+|---|---|
+| -O3 -march=skylake | FAIL: 8: verify error |
+| plus -fno-tree-loop-vectorize | FAIL |
+| plus -fno-tree-slp-vectorize | PASS |
+| plus -fno-tree-vectorize | PASS |
+| plus -fno-strict-aliasing | PASS |
+| plus -fwrapv | FAIL |
+| -O2 -march=skylake | PASS |
+| -O3 -march=x86-64 | PASS |
+
+Mixed-object links localize the fault: replacing **only hawk_sign.c** with its
+-fno-strict-aliasing or no-SLP object passes. Replacing only hawk_vrfy.c or only
+hawk_kgen.c does not. Disabling only loop vectorization in the signer still
+fails. Thus the verifier rejects a signature produced by the scalar signer;
+the error message does not establish a verifier bug. GCC14/native in cloud
+previously passed, so the compiler version/ISA/SLP interaction matters.
+
+Upstream Reference_Implementation/Makefile and Optimized_Implementation/avx2/
+Makefile specify c99 and -O2 with warnings; they do **not** mandate a
+-fno-tree-vectorize or -fno-strict-aliasing flag. Native -O2 is a validated
+fallback, not the same setting as the requested O3 benchmark.
+
+Chosen minimal benchmark adjustment: **only ref hawk_sign.c adds
+-fno-strict-aliasing**; all other objects remain -O3 -march=native and both
+loop/SLP vectorization stay enabled. The AVX2 build is unchanged. source_flags
+in config.json, build logs and metadata record this exception. No algorithm
+source line, parameter, RNG or encoding is changed.
+
+The scalar signer contains packed-buffer accesses through uint64_t pointers
+(e.g. bp_xor_64/128/256/512 in src/hawk_sign.c:302ff). The experiments establish
+SLP/alias-optimization sensitivity and the per-file workaround, but do not by
+themselves prove a GCC defect versus a precise C effective-type/aliasing UB
+violation. We report that boundary explicitly rather than label GCC faulty
+without a minimized standards-level reproducer. Evidence and compiler package
+hashes are in diagnosis/gcc11-scalar-signer/. The original native KAT/selftest
+and cross-verification remain mandatory; the build does not retry silently with
+weaker flags after a failed test.
+
+
+### LOGN hypothesis checked explicitly
+
+The original test_self.c always invokes test_multiple_sigs(8,...), (9,...),
+(10,...), each with 100 cases and its original expected hash. Native src/*.c/h
+and test_self.c never reference the uppercase LOGN macro: logn is a runtime API
+argument. Only bench/adapter.h uses LOGN for its buffer sizes and selected API
+argument. Thus defining LOGN=9 does not restrict the linked native implementation
+to n=512. All ten GCC11 scalar algorithm object files are **byte-identical** with
+and without -DLOGN=9 (hash evidence LOGN-macro-proof.json). The failing baseline
+compiler matrix already omitted LOGN and still reproduced `8: verify error`.
+Removing that macro alone therefore cannot fix the reported failure.
+
+For build hygiene, LOGN is now in driver_flags only: the native universal objects
+and selftest are compiled without it, and the timing driver alone gets 9 or 10.
+The selftest continues to cover all three degrees; n=256 is not removed to hide
+the error. Its scalar signer still needs the measured per-file alias workaround.
+The earlier cloud run had GCC14/native on a Zen4-class CPU and passed all 8/9/10
+cases; the older local build disabled SLP globally. Neither fact contradicts
+this compiler/ISA/alias optimization sensitivity. A mixed-object GCC14/Skylake
+signer also failed with the GCC11 baseline, so this is not claimed to be a
+uniquely GCC11 defect fixed by every later compiler. No minimized GCC-vs-UB
+classification is asserted.

@@ -1,0 +1,32 @@
+[
+  {
+    "label": "only-signer-no-slp",
+    "exit": 0,
+    "tail": "..............................................................\n10: ....................................................................................................\ndegree      priv     pub     sig\nn =  256      96     450     249\nn =  512     184    1024     555\nn = 1024     360    2440    1221\n"
+  },
+  {
+    "label": "only-signer-no-loop",
+    "exit": 1,
+    "tail": "Test SHAKE: ... done.\nTest SHAKE-x4: .................... done.\n8: verify error\n"
+  },
+  {
+    "label": "only-verifier-no-alias",
+    "exit": 1,
+    "tail": "Test SHAKE: ... done.\nTest SHAKE-x4: .................... done.\n8: verify error\n"
+  },
+  {
+    "label": "only-verifier-no-slp",
+    "exit": 1,
+    "tail": "Test SHAKE: ... done.\nTest SHAKE-x4: .................... done.\n8: verify error\n"
+  },
+  {
+    "label": "only-signer-no-alias",
+    "exit": 0,
+    "tail": "..............................................................\n10: ....................................................................................................\ndegree      priv     pub     sig\nn =  256      96     450     249\nn =  512     184    1024     555\nn = 1024     360    2440    1221\n"
+  },
+  {
+    "label": "only-keygen-no-alias",
+    "exit": 1,
+    "tail": "Test SHAKE: ... done.\nTest SHAKE-x4: .................... done.\n8: verify error\n"
+  }
+]

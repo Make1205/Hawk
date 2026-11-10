@@ -1,0 +1,28 @@
+[
+  {
+    "label": "gcc14-skylake",
+    "cc": "/usr/bin/gcc",
+    "flags": [
+      "-O3",
+      "-march=skylake",
+      "-std=gnu11",
+      "-I.",
+      "-DHAWK_AVX2=0",
+      "-DNTRUGEN_AVX2=0"
+    ],
+    "exit": 1
+  },
+  {
+    "label": "gcc11-native",
+    "cc": "/workspace/toolchains/gcc11/usr/bin/gcc-11",
+    "flags": [
+      "-O3",
+      "-march=native",
+      "-std=gnu11",
+      "-I.",
+      "-DHAWK_AVX2=0",
+      "-DNTRUGEN_AVX2=0"
+    ],
+    "exit": 1
+  }
+]

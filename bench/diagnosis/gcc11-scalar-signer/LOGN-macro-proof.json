@@ -1,0 +1,62 @@
+[
+  {
+    "source": "hawk_kgen.c",
+    "without_LOGN": "99ee4eb691573157e4e305afb577e071fc539026f4e7caea5c4acff3441d9b0e",
+    "with_LOGN9": "99ee4eb691573157e4e305afb577e071fc539026f4e7caea5c4acff3441d9b0e",
+    "byte_identical": true
+  },
+  {
+    "source": "hawk_sign.c",
+    "without_LOGN": "366f3bff7b740ee42f0b4eab1a7b6bc428950005bbcb4b25b6f0a2424f7e506c",
+    "with_LOGN9": "366f3bff7b740ee42f0b4eab1a7b6bc428950005bbcb4b25b6f0a2424f7e506c",
+    "byte_identical": true
+  },
+  {
+    "source": "hawk_vrfy.c",
+    "without_LOGN": "7a920e015b8ebffa09d68194184d0ae0836262742cad6e11cf03f6a4c607b41b",
+    "with_LOGN9": "7a920e015b8ebffa09d68194184d0ae0836262742cad6e11cf03f6a4c607b41b",
+    "byte_identical": true
+  },
+  {
+    "source": "ng_fxp.c",
+    "without_LOGN": "ff35c0b31b2325256bd0a84550e62e18a2c373488a9a4375d555d966e85567dc",
+    "with_LOGN9": "ff35c0b31b2325256bd0a84550e62e18a2c373488a9a4375d555d966e85567dc",
+    "byte_identical": true
+  },
+  {
+    "source": "ng_hawk.c",
+    "without_LOGN": "fb38b45882736595ffc60e521aa400e398b46fa2e91ea6e4d69cdf72104fd74f",
+    "with_LOGN9": "fb38b45882736595ffc60e521aa400e398b46fa2e91ea6e4d69cdf72104fd74f",
+    "byte_identical": true
+  },
+  {
+    "source": "ng_mp31.c",
+    "without_LOGN": "a2d8c6c05818ebddfad784c80a57059856643e0f124b32c5a6a2e061fbdad805",
+    "with_LOGN9": "a2d8c6c05818ebddfad784c80a57059856643e0f124b32c5a6a2e061fbdad805",
+    "byte_identical": true
+  },
+  {
+    "source": "ng_ntru.c",
+    "without_LOGN": "16760d413abf4e3143e361b851ccc4b1e90c05cad2cbd632b2d950d5af301ab0",
+    "with_LOGN9": "16760d413abf4e3143e361b851ccc4b1e90c05cad2cbd632b2d950d5af301ab0",
+    "byte_identical": true
+  },
+  {
+    "source": "ng_poly.c",
+    "without_LOGN": "552c9f07691c9a9588b97b0dbeb3f30ff5852511e945725c60efd14cf06db701",
+    "with_LOGN9": "552c9f07691c9a9588b97b0dbeb3f30ff5852511e945725c60efd14cf06db701",
+    "byte_identical": true
+  },
+  {
+    "source": "ng_zint31.c",
+    "without_LOGN": "112b1ade6bc3ace06d9188e9561bcf323421cb162334df2563fd5bf8464717c4",
+    "with_LOGN9": "112b1ade6bc3ace06d9188e9561bcf323421cb162334df2563fd5bf8464717c4",
+    "byte_identical": true
+  },
+  {
+    "source": "sha3.c",
+    "without_LOGN": "1be369bca841b904c9698cc39e190b479f0382e7a4fb349af8e21d7e0fa3c1e6",
+    "with_LOGN9": "1be369bca841b904c9698cc39e190b479f0382e7a4fb349af8e21d7e0fa3c1e6",
+    "byte_identical": true
+  }
+]

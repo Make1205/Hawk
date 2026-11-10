@@ -1,0 +1,204 @@
+{
+  "scale": "QUICK",
+  "timing_iterations": 11,
+  "signatures": 100,
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "affinity": 0,
+  "gcc": "gcc (Debian 14.2.0-19) 14.2.0",
+  "benchmark_commit": "dc76e513997c73721898d9cdd900abf896e06bb8",
+  "tested_commit": "1b9fef52559273fe7b40fe3e22968eaedd3a4c2a",
+  "initial_commit": "1b9fef52559273fe7b40fe3e22968eaedd3a4c2a",
+  "initial_status": " M bench/NOTES.md\n M bench/config.json\n M bench/run.py\n?? bench/diagnosis/\n",
+  "flags": [
+    "-O3",
+    "-march=native",
+    "-std=gnu11"
+  ],
+  "configuration": {
+    "scheme": "HAWK",
+    "initial_commit": "1b9fef52559273fe7b40fe3e22968eaedd3a4c2a",
+    "tested_commit": "1b9fef52559273fe7b40fe3e22968eaedd3a4c2a",
+    "sets": [
+      {
+        "name": "512",
+        "paper_pk": 1024,
+        "paper_sig": 555,
+        "paper_q": -1,
+        "require_equal": true,
+        "variants": [
+          {
+            "name": "ref",
+            "cwd": "src",
+            "flags": [
+              "-DLOGN=9",
+              "-DHAWK_AVX2=0",
+              "-DNTRUGEN_AVX2=0"
+            ],
+            "sources": [
+              "hawk_kgen.c",
+              "hawk_sign.c",
+              "hawk_vrfy.c",
+              "ng_fxp.c",
+              "ng_hawk.c",
+              "ng_mp31.c",
+              "ng_ntru.c",
+              "ng_poly.c",
+              "ng_zint31.c",
+              "sha3.c"
+            ],
+            "extra_sources": [],
+            "libs": [],
+            "kat": [
+              {
+                "name": "selftest",
+                "sources": [
+                  "../Reference_Implementation/tests/test_self.c"
+                ],
+                "expect": "n = 1024"
+              }
+            ],
+            "source_flags": {
+              "hawk_sign.c": [
+                "-fno-strict-aliasing"
+              ]
+            }
+          },
+          {
+            "name": "avx2",
+            "cwd": "src",
+            "flags": [
+              "-DLOGN=9",
+              "-DHAWK_AVX2=1",
+              "-DNTRUGEN_AVX2=1"
+            ],
+            "sources": [
+              "hawk_kgen.c",
+              "hawk_sign.c",
+              "hawk_vrfy.c",
+              "ng_fxp.c",
+              "ng_hawk.c",
+              "ng_mp31.c",
+              "ng_ntru.c",
+              "ng_poly.c",
+              "ng_zint31.c",
+              "sha3.c"
+            ],
+            "extra_sources": [],
+            "libs": [],
+            "kat": [
+              {
+                "name": "selftest",
+                "sources": [
+                  "../Reference_Implementation/tests/test_self.c"
+                ],
+                "expect": "n = 1024"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "1024",
+        "paper_pk": 2440,
+        "paper_sig": 1221,
+        "paper_q": -1,
+        "require_equal": true,
+        "variants": [
+          {
+            "name": "ref",
+            "cwd": "src",
+            "flags": [
+              "-DLOGN=10",
+              "-DHAWK_AVX2=0",
+              "-DNTRUGEN_AVX2=0"
+            ],
+            "sources": [
+              "hawk_kgen.c",
+              "hawk_sign.c",
+              "hawk_vrfy.c",
+              "ng_fxp.c",
+              "ng_hawk.c",
+              "ng_mp31.c",
+              "ng_ntru.c",
+              "ng_poly.c",
+              "ng_zint31.c",
+              "sha3.c"
+            ],
+            "extra_sources": [],
+            "libs": [],
+            "kat": [
+              {
+                "name": "selftest",
+                "sources": [
+                  "../Reference_Implementation/tests/test_self.c"
+                ],
+                "expect": "n = 1024"
+              }
+            ],
+            "source_flags": {
+              "hawk_sign.c": [
+                "-fno-strict-aliasing"
+              ]
+            }
+          },
+          {
+            "name": "avx2",
+            "cwd": "src",
+            "flags": [
+              "-DLOGN=10",
+              "-DHAWK_AVX2=1",
+              "-DNTRUGEN_AVX2=1"
+            ],
+            "sources": [
+              "hawk_kgen.c",
+              "hawk_sign.c",
+              "hawk_vrfy.c",
+              "ng_fxp.c",
+              "ng_hawk.c",
+              "ng_mp31.c",
+              "ng_ntru.c",
+              "ng_poly.c",
+              "ng_zint31.c",
+              "sha3.c"
+            ],
+            "extra_sources": [],
+            "libs": [],
+            "kat": [
+              {
+                "name": "selftest",
+                "sources": [
+                  "../Reference_Implementation/tests/test_self.c"
+                ],
+                "expect": "n = 1024"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "dependencies": [],
+    "header_copies": [
+      [
+        "src/hawk.h",
+        "Reference_Implementation/hawk.h"
+      ]
+    ],
+    "notes": "Fixed/padded signatures. Actual byte length is read by parsing the sign/low-bit fixed region and the unary high-part region; no heuristic zero stripping. HAWK_AVX2 and NTRUGEN_AVX2 explicitly select scalar or upstream SIMD. KeyGen uses integer fixed-point NTRUGEN, signing is integer-based; neither needs floating point or GMP. Native self_test includes SHAKE KATs and 100-case aggregate key/signature hash KATs for degrees 256/512/1024. Expanded-key Sign uses hawk_sign_finish_alt with a decoded key; this API also changes how the RNG is consumed and is additional information, not an isolated decode-only speedup. Timing callback uses the repository SHAKE with an OS seed initialized before measurements."
+  },
+  "benchmark_hashes": {
+    ".gitignore": "68c8824892a82c4a572123a7baf73b9b687318782f39021fb10ead083095a2fe",
+    "NOTES.md": "574c538b46573e5bb4eb5fdc7668b0bb03bc3b8dcd53a1c28cb4d77e4ded10c5",
+    "README.md": "c2d41c54c82d16a29d1d4056f5cd80c63115680ec71c1cbffc6bb596eca8031e",
+    "adapter.h": "b62150da1c7ee4e327635dc191995d63c311ca5559cee670c33b0ad9f5fde72d",
+    "config.json": "397275b22f94b31a3cde18d2050c005e2614edcc90f66f37ecfb79b99119c5d2",
+    "cpucycles.c": "31cc4c16b1e896b2cf7cc154aa21430329c0047cf9898a1865f9bfe9904f25e4",
+    "cpucycles.h": "7f1e2b68cf3e3c76076364af3c5350de61442450c477aec809da8de10e131838",
+    "driver.c": "f6f77dba3d3748af2c760f26025f5a94d720a2529e06aef0cc505c9853090380",
+    "run.py": "fa2df7a49a202706dad232aad437f0bc935db74069517b21b75816596ec61a7a",
+    "run.sh": "b4297fab34341f6ef53ef6daad6e6173b826476bc2bf92fb634427e2b9e385a2",
+    "speed_print.c": "533fc7bd12204078a5390cfb58c05d550b214850876609f8e98f7377b9d4f1b3",
+    "speed_print.h": "3946b0226c63125664eb443a20d43563e6d1ba7fa3be5c1b952cd29d1477b2ef",
+    "PROTOCOL.md": "8553a21619f18ea85ce2d920b29cda87f4521a5bc1d88339d98a614e7a2011e6",
+    "fma_audit.py": "90af0b7c726980e7130d3dd8515295ab787eb4e98667dc2fab22d28cc5318908"
+  }
+}
