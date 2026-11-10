@@ -30,3 +30,13 @@ cross-verified; disabling contraction removed 15 compiler-generated FMA
 instructions and restored equality with ref for that case. c-fn-dsa now requires
 ref/AVX2 byte equality and also retains all cross-verification checks. c-fn-dsa
 is the paper's primary Falcon-family measurement; VecFalcon is the backup.
+
+
+## Fresh-key sample population
+
+Discard 20 complete keygen/sign/verify warmup triples, then time a new serialized
+keypair and signature in every sample. No reused-key timing groups. Expanded-key
+Sign remains supplemental and reuses an explicitly prepared key. Ref hawk_sign.c
+uses the documented per-file -fno-strict-aliasing correctness workaround; all other
+translation units retain O3/native. LOGN is a driver-only macro; upstream native
+selftests and universal objects are compiled without it and test logn=8/9/10.
