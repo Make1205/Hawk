@@ -1,0 +1,18 @@
+$ /workspace/Hawk/bench/results/20261110T045347.344016Z/work/1024-ref/driver time 11
+META 1024 -1 2440 360 1221
+KeyGen
+median: 27805855 cycles/ticks
+average: 35355538 cycles/ticks
+
+Sign
+median: 318057 cycles/ticks
+average: 321491 cycles/ticks
+
+Verify
+median: 305967 cycles/ticks
+average: 324051 cycles/ticks
+
+ExpandedSign
+median: 282749 cycles/ticks
+average: 288970 cycles/ticks
+

@@ -1,0 +1,165 @@
+{
+  "scheme": "HAWK",
+  "initial_commit": "1b9fef52559273fe7b40fe3e22968eaedd3a4c2a",
+  "tested_commit": "1b9fef52559273fe7b40fe3e22968eaedd3a4c2a",
+  "sets": [
+    {
+      "name": "512",
+      "paper_pk": 1024,
+      "paper_sig": 555,
+      "paper_q": -1,
+      "require_equal": true,
+      "variants": [
+        {
+          "name": "ref",
+          "cwd": "src",
+          "flags": [
+            "-DLOGN=9",
+            "-DHAWK_AVX2=0",
+            "-DNTRUGEN_AVX2=0",
+            "-fno-tree-vectorize",
+            "-fno-tree-slp-vectorize"
+          ],
+          "sources": [
+            "hawk_kgen.c",
+            "hawk_sign.c",
+            "hawk_vrfy.c",
+            "ng_fxp.c",
+            "ng_hawk.c",
+            "ng_mp31.c",
+            "ng_ntru.c",
+            "ng_poly.c",
+            "ng_zint31.c",
+            "sha3.c"
+          ],
+          "extra_sources": [],
+          "libs": [],
+          "kat": [
+            {
+              "name": "selftest",
+              "sources": [
+                "../Reference_Implementation/tests/test_self.c"
+              ],
+              "expect": "n = 1024"
+            }
+          ]
+        },
+        {
+          "name": "avx2",
+          "cwd": "src",
+          "flags": [
+            "-DLOGN=9",
+            "-DHAWK_AVX2=1",
+            "-DNTRUGEN_AVX2=1"
+          ],
+          "sources": [
+            "hawk_kgen.c",
+            "hawk_sign.c",
+            "hawk_vrfy.c",
+            "ng_fxp.c",
+            "ng_hawk.c",
+            "ng_mp31.c",
+            "ng_ntru.c",
+            "ng_poly.c",
+            "ng_zint31.c",
+            "sha3.c"
+          ],
+          "extra_sources": [],
+          "libs": [],
+          "kat": [
+            {
+              "name": "selftest",
+              "sources": [
+                "../Reference_Implementation/tests/test_self.c"
+              ],
+              "expect": "n = 1024"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "1024",
+      "paper_pk": 2440,
+      "paper_sig": 1221,
+      "paper_q": -1,
+      "require_equal": true,
+      "variants": [
+        {
+          "name": "ref",
+          "cwd": "src",
+          "flags": [
+            "-DLOGN=10",
+            "-DHAWK_AVX2=0",
+            "-DNTRUGEN_AVX2=0",
+            "-fno-tree-vectorize",
+            "-fno-tree-slp-vectorize"
+          ],
+          "sources": [
+            "hawk_kgen.c",
+            "hawk_sign.c",
+            "hawk_vrfy.c",
+            "ng_fxp.c",
+            "ng_hawk.c",
+            "ng_mp31.c",
+            "ng_ntru.c",
+            "ng_poly.c",
+            "ng_zint31.c",
+            "sha3.c"
+          ],
+          "extra_sources": [],
+          "libs": [],
+          "kat": [
+            {
+              "name": "selftest",
+              "sources": [
+                "../Reference_Implementation/tests/test_self.c"
+              ],
+              "expect": "n = 1024"
+            }
+          ]
+        },
+        {
+          "name": "avx2",
+          "cwd": "src",
+          "flags": [
+            "-DLOGN=10",
+            "-DHAWK_AVX2=1",
+            "-DNTRUGEN_AVX2=1"
+          ],
+          "sources": [
+            "hawk_kgen.c",
+            "hawk_sign.c",
+            "hawk_vrfy.c",
+            "ng_fxp.c",
+            "ng_hawk.c",
+            "ng_mp31.c",
+            "ng_ntru.c",
+            "ng_poly.c",
+            "ng_zint31.c",
+            "sha3.c"
+          ],
+          "extra_sources": [],
+          "libs": [],
+          "kat": [
+            {
+              "name": "selftest",
+              "sources": [
+                "../Reference_Implementation/tests/test_self.c"
+              ],
+              "expect": "n = 1024"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "dependencies": [],
+  "header_copies": [
+    [
+      "src/hawk.h",
+      "Reference_Implementation/hawk.h"
+    ]
+  ],
+  "notes": "Fixed/padded signatures. Actual byte length is read by parsing the sign/low-bit fixed region and the unary high-part region; no heuristic zero stripping. HAWK_AVX2 and NTRUGEN_AVX2 explicitly select scalar or upstream SIMD. KeyGen uses integer fixed-point NTRUGEN, signing is integer-based; neither needs floating point or GMP. Native self_test includes SHAKE KATs and 100-case aggregate key/signature hash KATs for degrees 256/512/1024. Expanded-key Sign uses hawk_sign_finish_alt with a decoded key; this API also changes how the RNG is consumed and is additional information, not an isolated decode-only speedup. Timing callback uses the repository SHAKE with an OS seed initialized before measurements."
+}

@@ -1,0 +1,28 @@
+$ /workspace/Hawk/bench/results/20261110T045347.344016Z/work/512-ref/driver generate 100 /workspace/Hawk/bench/results/20261110T045347.344016Z/work/512-ref.vectors
+META 512 -1 1024 184 555
+LENGTH 53630 100 528 548
+PASS generate
+$ /workspace/Hawk/bench/results/20261110T045347.344016Z/work/512-avx2/driver generate 100 /workspace/Hawk/bench/results/20261110T045347.344016Z/work/512-avx2.vectors
+META 512 -1 1024 184 555
+LENGTH 53630 100 528 548
+PASS generate
+$ /workspace/Hawk/bench/results/20261110T045347.344016Z/work/512-ref/driver check 100 /workspace/Hawk/bench/results/20261110T045347.344016Z/work/512-avx2.vectors
+META 512 -1 1024 184 555
+PASS cross 100
+$ /workspace/Hawk/bench/results/20261110T045347.344016Z/work/512-avx2/driver check 100 /workspace/Hawk/bench/results/20261110T045347.344016Z/work/512-ref.vectors
+META 512 -1 1024 184 555
+PASS cross 100
+$ /workspace/Hawk/bench/results/20261110T045347.344016Z/work/1024-ref/driver generate 100 /workspace/Hawk/bench/results/20261110T045347.344016Z/work/1024-ref.vectors
+META 1024 -1 2440 360 1221
+LENGTH 119760 100 1187 1214
+PASS generate
+$ /workspace/Hawk/bench/results/20261110T045347.344016Z/work/1024-avx2/driver generate 100 /workspace/Hawk/bench/results/20261110T045347.344016Z/work/1024-avx2.vectors
+META 1024 -1 2440 360 1221
+LENGTH 119760 100 1187 1214
+PASS generate
+$ /workspace/Hawk/bench/results/20261110T045347.344016Z/work/1024-ref/driver check 100 /workspace/Hawk/bench/results/20261110T045347.344016Z/work/1024-avx2.vectors
+META 1024 -1 2440 360 1221
+PASS cross 100
+$ /workspace/Hawk/bench/results/20261110T045347.344016Z/work/1024-avx2/driver check 100 /workspace/Hawk/bench/results/20261110T045347.344016Z/work/1024-ref.vectors
+META 1024 -1 2440 360 1221
+PASS cross 100
