@@ -8,6 +8,13 @@ Tested commit: `1b9fef52559273fe7b40fe3e22968eaedd3a4c2a`. Benchmark commit: `1b
 
 Base flags: `-O3 -march=native -std=gnu11`. Each operation: 11 iterations; correctness and lengths: 100 signatures per build/set. Message: 32 bytes. Median units: thousand RDTSC ticks.
 
+Exact per-build options (in addition to base flags and local include paths):
+
+* 512 ref: `-DLOGN=9 -DHAWK_AVX2=0 -DNTRUGEN_AVX2=0 -fno-tree-vectorize -fno-tree-slp-vectorize`; link ``.
+* 512 avx2: `-DLOGN=9 -DHAWK_AVX2=1 -DNTRUGEN_AVX2=1`; link ``.
+* 1024 ref: `-DLOGN=10 -DHAWK_AVX2=0 -DNTRUGEN_AVX2=0 -fno-tree-vectorize -fno-tree-slp-vectorize`; link ``.
+* 1024 avx2: `-DLOGN=10 -DHAWK_AVX2=1 -DNTRUGEN_AVX2=1`; link ``.
+
 | 参数集 | n | q | pk | sig（仓库实际） | 论文 sig | ref KeyGen/Sign/Verify | AVX2 KeyGen/Sign/Verify |
 |---|---:|---:|---:|---|---:|---|---|
 | 512 | 512 | -- | 1024 | 555; unpadded avg 536.3000, max 548 | 555 | 4600.699/145.885/142.505 | 2613.857/27.819/43.315 |

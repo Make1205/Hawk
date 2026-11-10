@@ -107,3 +107,9 @@ the native KAT uses its own original deterministic SHAKE callback unchanged.
 GitHub REST metadata for Make1205/Hawk was also checked: fork=true,
 parent.full_name=hawk-sign/dev and source.full_name=hawk-sign/dev. Thus both the
 GitHub fork relationship and the exact requested upstream Git revision are confirmed.
+
+Before any algorithm build, the runner also compile/links a standard C
+header/runtime/libm probe. Failure reports apt package build-essential
+(including libc6-dev). Exact extra per-build flags are printed near the
+SUMMARY heading as well as retained in metadata and logs. This final
+preflight/report change leaves the measured driver and QUICK values unchanged.
