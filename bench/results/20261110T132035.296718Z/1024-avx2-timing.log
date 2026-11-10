@@ -1,0 +1,18 @@
+$ /workspace/Hawk/bench/results/20261110T132035.296718Z/work/1024-avx2/driver time 11
+META 1024 -1 2440 360 1221
+KeyGen
+median: 37132549 cycles/ticks
+average: 52421657 cycles/ticks
+
+Sign
+median: 93495 cycles/ticks
+average: 98068 cycles/ticks
+
+Verify
+median: 124149 cycles/ticks
+average: 3354244 cycles/ticks
+
+ExpandedSign
+median: 175863 cycles/ticks
+average: 175777 cycles/ticks
+

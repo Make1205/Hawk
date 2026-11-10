@@ -47,7 +47,7 @@ def main():
  else:cpu=None
  stamp=datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%dT%H%M%S.%fZ');out=BENCH/'results'/stamp;out.mkdir(parents=True)
  print('Results:',out,flush=True)
- meta={'scale':'QUICK' if quick else 'FULL','timing_iterations':nt,'signatures':ns,'cpu':platform.processor(),'affinity':cpu,'gcc':call([CC,'--version']).splitlines()[0],'benchmark_commit':call(['git','rev-parse','HEAD']).strip(),'tested_commit':CFG['tested_commit'],'initial_commit':CFG['initial_commit'],'initial_status':call(['git','status','--porcelain']),'flags':BASE,'configuration':CFG,'benchmark_hashes':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in BENCH.iterdir() if p.is_file()}}
+ meta={'scale':'QUICK' if quick else 'FULL','timing_iterations':nt,'timing_warmup':20,'message_bytes':32,'key_input':'bytes','fresh_keys_per_timing_sample':True,'signatures':ns,'cpu':platform.processor(),'affinity':cpu,'gcc':call([CC,'--version']).splitlines()[0],'benchmark_commit':call(['git','rev-parse','HEAD']).strip(),'tested_commit':CFG['tested_commit'],'initial_commit':CFG['initial_commit'],'initial_status':call(['git','status','--porcelain']),'flags':BASE,'configuration':CFG,'benchmark_hashes':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in BENCH.iterdir() if p.is_file()}}
  if Path('/proc/cpuinfo').exists():meta['cpu']=re.search(r'^model name\s*:\s*(.*)$',Path('/proc/cpuinfo').read_text(),re.M)[1]
  (out/'metadata.json').write_text(json.dumps(meta,indent=2)+'\n')
  stage=out/'work'/'source';archive(CFG['tested_commit'],stage)
@@ -142,6 +142,7 @@ def main():
   name=row['name'];s+='| '+name+' | '+' | '.join('%.3f'%lookup[name,v,'ExpandedSign'] if (name,v,'ExpandedSign') in lookup else '--' for v in ('ref','avx2'))+' |\n'
  s+='\nCorrectness: all configured upstream KAT/self-tests passed; all generated signatures verified; changed messages rejected. Cross-build/equality details are in correctness.json.\n\n'
  s+='\nFMA audit: selected integer/fixed-point paths; zero FMA instructions in all benchmark-owned objects and linked drivers. See *-fma-audit.json.\n'
+ s+='\nTiming: 20 discarded warmup triples, then one fresh keypair/signature per timed KeyGen/Sign/Verify triple; 32-byte message, serialized keys. Expanded-key Sign is supplemental.\n'
  s+=CFG.get('notes','')+'\n\nBuild flags and commands per variant are in config.json, metadata.json and build logs. All source is extracted locally from the tested commit; algorithm files are unchanged. See bench/NOTES.md.\n'
  (out/'SUMMARY.md').write_text(s)
  print('PASS:',out/'SUMMARY.md',flush=True)

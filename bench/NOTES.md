@@ -200,3 +200,13 @@ this compiler/ISA/alias optimization sensitivity. A mixed-object GCC14/Skylake
 signer also failed with the GCC11 baseline, so this is not claimed to be a
 uniquely GCC11 defect fixed by every later compiler. No minimized GCC-vs-UB
 classification is asserted.
+
+
+### Timing protocol audit (same update)
+
+The old driver used separate timing groups with a reused signing/verification key.
+It now uses the shared Lithium driver: 20 discarded fresh-key triples, then a
+fresh keypair and signature on every timed triple. Messages remain 32 bytes and
+Sign/Verify start with serialized keys. Expanded-key Sign is supplemental.
+This timing alignment requires a new HAWK FULL run independently of the compiler
+workaround. Correctness corpus and upstream selftest semantics are unchanged.
