@@ -103,3 +103,7 @@ it is not a pure decode-only performance comparison. The timing RNG callback is
 an OS-seeded instance of the repository SHAKE, initialized before measurement.
 The cross-test callback instead supplies the bench deterministic byte stream;
 the native KAT uses its own original deterministic SHAKE callback unchanged.
+
+GitHub REST metadata for Make1205/Hawk was also checked: fork=true,
+parent.full_name=hawk-sign/dev and source.full_name=hawk-sign/dev. Thus both the
+GitHub fork relationship and the exact requested upstream Git revision are confirmed.
